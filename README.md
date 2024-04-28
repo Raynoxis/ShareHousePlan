@@ -1,7 +1,10 @@
 # Introduction
 ShareHousePlan lets you share the plans of a house under construction, which are in the format of “*.SVG*” files (Example : SweetHome3D export). ShareHousePlan lets you manage the different floors of the building, with filters and interest points (linked img, pdf, html) you can add. It's a PWA (Web app), which can be deployed as a Docker container.
 
-I'll show you how it all works, from creation in SweetHome3D with SVG export to the configuration  of the application on my Youtube channel. : https://www.youtube.com/@Raynoxis (French)
+I'll show you how it works soon on my Youtube channel. : https://www.youtube.com/@Raynoxis (French), from creation in SweetHome3D (with SVG export) to the configuration of the application.
+
+# Demo
+https://github.com/Raynoxis/ShareHousePlan/assets/34026291/2e8e0695-2fb9-4044-93f0-3aad52ffe1ca
 
 # Deployment
 ## docker-compose.yml
