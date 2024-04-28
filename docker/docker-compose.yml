@@ -1,0 +1,12 @@
+services:
+  sharehouseplan:
+    build:
+      context: ../
+      dockerfile: ./docker/Dockerfile
+    container_name: ShareHousePlan
+    restart: always
+    # Pass in your config file below, by specifying the path on your host machine
+    volumes:
+      - ./DATAS/datas:/app/datas
+    ports:
+      - 54321:8080

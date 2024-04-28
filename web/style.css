@@ -1,0 +1,91 @@
+@import "node_modules/ol/ol.css";
+
+html, body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    overflow-x: hidden;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+.top-bar {
+    background-color: #333;
+    color: white;
+    padding: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.center-title {
+    position: absolute; /* Positionnement absolu pour centrer le titre */
+    display: flex;
+    align-items: center;
+    left: 50%; /* Déplacement du titre de 50% de la largeur de la top-bar */
+    transform: translateX(-50%); /* Décalage en arrière de 50% de la largeur du titre lui-même */
+}
+
+.left-controls {
+    display: flex;
+    align-items: center;
+}
+
+.left-controls2 {
+    display: flex;
+    align-items: center;
+}
+
+.right-controls {
+    display: flex;
+    align-items: center;
+}
+
+.x,
+.y {
+    width: 40px;
+    font-size: 15px; /* Ajustez la taille de la police selon vos besoins */
+    padding: 5px 10px; /* Ajustez la taille globale des boutons en modifiant les valeurs de marge intérieure */
+    margin-left: 3px; /* Ajoute un espace de 10 pixels entre chaque bouton */
+}
+
+.map-container {
+    flex: 1;
+    display: flex;
+    align-items: stretch;
+}
+
+.map {
+    flex: 1;
+    background: white;
+}
+
+#map {
+    background: white;
+}
+
+.floor-button {
+    border-radius: 20px;
+    font-size: 15px; /* Ajustez la taille de la police selon vos besoins */
+    padding: 5px 10px; /* Ajustez la taille globale des boutons en modifiant les valeurs de marge intérieure */
+    margin-right: 3px; /* Ajoute un espace de 10 pixels entre chaque bouton */
+}
+
+.filter-style {
+    border-radius: 20px;
+    font-size: 15px; /* Ajustez la taille de la police selon vos besoins */
+    padding: 5px 10px; /* Ajustez la taille globale des boutons en modifiant les valeurs de marge intérieure */
+}
+
+.floor-button.active {
+    background-color: #4CAF50; /* Couleur de surbrillance */
+    color: white; /* Texte en surbrillance */
+}
+
+.svg-layer path:hover {
+    opacity: 0.4;
+}
