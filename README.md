@@ -51,11 +51,17 @@ services:
       - 8080:8080
 ```
 
+***
+
 # SweetHome3D Use
 - Before all, you have to install a Plug-in on SweetHome3D to enhances the export to ```.svg``` (better compression for Web..)
 https://sourceforge.net/p/sweethome3d/plug-ins/43/
 
-- First you haves to create some classic floor on SweetHome3D like : Floor1 or Floor2 and design your house floor by floor.
+- First you haves to create some classic floor on SweetHome3D (Floor1, Floor2, etc..) and design your house floor by floor.
+
+<img src="https://github.com/Raynoxis/ShareHousePlan/assets/34026291/fde5825c-d90f-4d07-a172-6b2e6067bd20" width="500">
+
+*You have to put a square of walls around your plan, same on each floor. This is the size of mine. I have to create a configuration file for this...*
   
 - After, for all your filters, you have to create somes "Floor of same Elevation" depending Floor1, and depending Floor2.
   
