@@ -1,20 +1,30 @@
 # Introduction
 ShareHousePlan lets you share the plans of a house under construction, which are in the format of “*.SVG*” files (Example : SweetHome3D export). ShareHousePlan lets you manage the different floors of the building, with filters and interest points (linked img, pdf, html) you can add. It's a PWA (Web app), which can be deployed as a Docker container.
 
-I'll show you how it works soon on my Youtube channel. : https://www.youtube.com/@Raynoxis (French), from creation in SweetHome3D (with SVG export) to the configuration of the application.
+I'll show you how it works soon on my Youtube channel. : https://www.youtube.com/@Raynoxis (_French_)
+- Creation in SweetHome3D (with SVG export)
+- The configuration of the application.
 
-# Demo
-https://github.com/Raynoxis/ShareHousePlan/assets/34026291/2e8e0695-2fb9-4044-93f0-3aad52ffe1ca
+**[Subscribe](https://www.youtube.com/@Raynoxis)** if you want to help me ! Bye ;)
+  
+***
 
-##Demo PC
+## Demo PC
 [demoPc.webm](https://github.com/Raynoxis/ShareHousePlan/assets/34026291/a60e24d3-3a94-40ad-9c98-d11a470a8788)
+
+## Demo Mobile (PWA)
+[demoMobile.webm](https://github.com/Raynoxis/ShareHousePlan/assets/34026291/fb1d1eff-23c5-43ea-86f0-faffa37bcb4b)
+
+_If you have more than two floors on your plans, don't worry, the buttons will become a drop-down list on mobile._
+
+***
 
 # Deployment
 ## docker-compose.yml
 ```yaml
 services:
   sharehouseplan:
-    container_name: ShareHousePlan-Test
+    container_name: ShareHousePlan
     image: raynoxis/sharehouseplan:v1.1
     restart: always
     volumes:
@@ -32,23 +42,26 @@ In **/app/datas** folder, you need to put all the configuration files and the da
 | *.svg* | Put all *.SVG* files for all your floors and filters. (Example below) |
 | others files.. | Put all files needed by your *point.json* (jpg, webp, png, pdf, etc..) |
 
+##### Example
+![demoDatas](https://github.com/Raynoxis/ShareHousePlan/assets/34026291/cedbd14e-68c2-4050-83b0-ed7692f7733d)
+
 ***
 
 #### config.json
-##### Example (French naming of floors ;-) )
+##### Example
 ```json
 {
-    "RDC": {
-      "nofilter": "datas/RDC.svg",
-      "lights": "datas/RDC_lights.svg",
-      "electricity": "datas/RDC_electricity.svg"
-    },
+  "floor1": {
+    "nofilter": "datas/floor1.svg",
+    "lights": "datas/floor1_lights.svg",
+    "electricity": "datas/floor1_electricity.svg"
+  },
 
-    "R+1": {
-      "nofilter": "datas/R+1.svg",
-      "lights": "datas/R+1_lights.svg",
-      "electricity": "datas/R+1_electricity.svg"
-    }
+  "floor2": {
+    "nofilter": "datas/floor2.svg",
+    "lights": "datas/floor2_lights.svg",
+    "electricity": "datas/floor2_electricity.svg"
+  }
 }
 ```
 ***
@@ -64,10 +77,22 @@ When you open the application, you can click on an area of interest, and retriev
         "coordinates": [80, -85]
       },
       "properties": {
-        "name": "Kitchen",
-        "floor": "RDC",
+        "name": "Kitchen 1",
+        "floor": "floor1",
         "type": "image",
-        "data": "/datas/kitchen.jpg"
+        "data": "/datas/kitchen1.jpg"
+      }
+    },
+    {
+      "geometry": {
+        "type": "Point",
+        "coordinates": [92, -97]
+      },
+      "properties": {
+        "name": "Kitchen 2",
+        "floor": "floor1",
+        "type": "image",
+        "data": "/datas/kitchen2.jpg"
       }
     },
     {
@@ -76,10 +101,10 @@ When you open the application, you can click on an area of interest, and retriev
         "coordinates": [86, -105]
       },
       "properties": {
-        "name": "Salon 1",
-        "floor": "RDC",
+        "name": "Kitchen 3",
+        "floor": "floor1",
         "type": "html",
-        "data": "Warning on the number of lights in this room !!!"
+        "data": "Be careful with the number of lights (suspension type) <br> so as not to obstruct the opening of the wall cabinet door"
       }
     },
     {
@@ -89,9 +114,21 @@ When you open the application, you can click on an area of interest, and retriev
       },
       "properties": {
         "name": "Room 1",
-        "floor": "R+1",
+        "floor": "floor2",
         "type": "image",
         "data": "/datas/idea.webp"
+      }
+    },
+    {
+      "geometry": {
+        "type": "Point",
+        "coordinates": [37, -69]
+      },
+      "properties": {
+        "name": "Room 2",
+        "floor": "floor2",
+        "type": "html",
+        "data": "Checking door opening"
       }
     }
   ]
