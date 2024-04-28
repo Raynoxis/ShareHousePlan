@@ -264,7 +264,7 @@ const iconStyle = new Style({
     anchor: [0, 0],
     anchorXUnits: 'pixels',
     anchorYUnits: 'pixels',
-    src: 'datas/loupe.png',
+    src: 'manifier.png',
     width: 30,
     height: 30,
   }),
