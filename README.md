@@ -1,7 +1,7 @@
 # Introduction
 ShareHousePlan lets you share the plans of a house under construction, which are in the format of “*.SVG*” files (Example : SweetHome3D export). ShareHousePlan lets you manage the different floors of the building, with filters and interest points (linked img, pdf, html) you can add. It's a PWA (Web app), which can be deployed as a Docker container.
 
-I'll show you how it works soon on my Youtube channel. : https://www.youtube.com/@Raynoxis (_French_)
+I'll show you how it works soon on my Youtube channel. : https://www.youtube.com/@Raynoxis (*French*)
 - Creation in SweetHome3D (with SVG export)
 - The configuration of the application.
 
@@ -15,7 +15,7 @@ I'll show you how it works soon on my Youtube channel. : https://www.youtube.com
 ## Demo Mobile (PWA)
 [demoMobile.webm](https://github.com/Raynoxis/ShareHousePlan/assets/34026291/fb1d1eff-23c5-43ea-86f0-faffa37bcb4b)
 
-_If you have more than two floors on your plans, don't worry, the buttons will become a drop-down list on mobile._
+*If you have more than two floors on your plans, don't worry, the buttons will become a drop-down list on mobile.*
 
 ***
 
@@ -133,6 +133,21 @@ When you open the application, you can click on an area of interest, and retriev
     }
   ]
 ```
+# SweetHome3D Use
+- Before all, you have to install a Plug-in on SweetHome3D to enhances the export to SVG (better compression for Web..)
+https://sourceforge.net/p/sweethome3d/plug-ins/43/
+
+- First you haves to create some classic floor on SweetHome3D like : Floor1 or Floor2 and design your house floor by floor.
+  
+- After, for all your filters, you have to create somes "Floor of same Elevation" depending Floor1, and depending Floor2.
+  
+- Finally you can show/hide each to have the result : Floor + Filter
+![SweetHome3D1](https://github.com/Raynoxis/ShareHousePlan/assets/34026291/a37781eb-04af-4db0-9ce9-774f723bb069)
+*Example to generate Floor1_electricity : I add layers : Floor1 + Floor1 Elec.*
+
+![SweetHome3D2](https://github.com/Raynoxis/ShareHousePlan/assets/34026291/d0007e33-bf2b-495e-95c6-c911f7e27fdb)
+ *With the selection on Floor1 Elec i can generate .svg.*
+
 
 ## License
 [![GPLv3 License](https://img.shields.io/badge/License-GPL%20v3-yellow.svg)](https://opensource.org/licenses/)
