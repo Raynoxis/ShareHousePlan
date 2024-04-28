@@ -60,6 +60,9 @@ https://sourceforge.net/p/sweethome3d/plug-ins/43/
 
 # Configuration
 ## Datas
+
+***Example datas : https://github.com/Raynoxis/ShareHousePlan/tree/main/docker/DATAS/datas***
+
 In **/app/datas** folder, you need to put all the configuration files and the datas.
 | Name | Description|
 | --- | --- |
