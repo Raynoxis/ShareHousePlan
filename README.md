@@ -6,6 +6,7 @@ ShareHousePlan's interface works equally well on cell phones and PCs, and can be
 ![pwaInstallExample](https://github.com/Raynoxis/ShareHousePlan/assets/34026291/6224d215-b97b-476b-80db-810bc5d025d2)
 
 ***
+
 ![Sweet Home 3D](https://www.sweethome3d.com/images/SweetHome3DLogo.png)
 
 I created this application to display a SweetHome3D plan. You can use another application, but you must be able to generate ```.svg``` files.
@@ -14,6 +15,7 @@ I created this application to display a SweetHome3D plan. You can use another ap
 which helps you draw the plan of your house, arrange furniture on it and visit the results in 3D. 
 
 ***
+
 <img src="https://www.gstatic.com/youtube/img/branding/youtubelogo/svg/youtubelogo.svg" width="150">
 
 I'll show you how it works soon on my Youtube channel : https://www.youtube.com/@Raynoxis (*French*)
@@ -50,31 +52,33 @@ services:
     ports:
       - 8080:8080
 ```
+- Create the file ```docker-compose.yml``` with a folder ```datas``` next to him. See below how to create your datas.
+
+- Run ```docker compose up -d``` to start the container.
 
 ***
 
 # SweetHome3D Use
 - Before all, you have to install a Plug-in on SweetHome3D to enhances the export to ```.svg``` (better compression for Web..)
 https://sourceforge.net/p/sweethome3d/plug-ins/43/
-
+***
 - First you haves to create some classic floor on SweetHome3D (Floor1, Floor2, etc..) and design your house floor by floor.
 
 <img src="https://github.com/Raynoxis/ShareHousePlan/assets/34026291/fde5825c-d90f-4d07-a172-6b2e6067bd20" width="500">
 
 *You have to put a square of walls around your plan, same on each floor. This is the size of mine. I have to create a configuration file for this...*
-  
+  ***
 - After, for all your filters, you have to create somes "Floor of same Elevation" depending Floor1, and depending Floor2.
-  
+  ***
 - Finally you can show/hide each to have the result : Floor + Filter
   
 ![SweetHome3D1](https://github.com/Raynoxis/ShareHousePlan/assets/34026291/a37781eb-04af-4db0-9ce9-774f723bb069)
 *Example to generate ```floor1_electricity.svg``` : I add layers : 'Floor1' + 'Floor1 Elec'*
 
-***
 
 ![SweetHome3D2](https://github.com/Raynoxis/ShareHousePlan/assets/34026291/d0007e33-bf2b-495e-95c6-c911f7e27fdb)
  *With the active selection on 'Floor1 Elec' i can generate ```floor1_electricity.svg``` (Before i hide 'Floor1 Legend' and 'Floor1 Lights')*
-
+***
  - (OPTIONAL) : Install the Plug-in : '2DSymbols' on SweetHome3D, to have the same symbols as me.
 
 ***
