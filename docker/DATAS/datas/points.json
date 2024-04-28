@@ -5,10 +5,10 @@
         "coordinates": [80, -85]
       },
       "properties": {
-        "name": "Cuisine 1",
-        "floor": "RDC",
+        "name": "Kitchen 1",
+        "floor": "floor1",
         "type": "image",
-        "data": "/datas/cuisine1.jpg"
+        "data": "/datas/kitchen1.jpg"
       }
     },
     {
@@ -17,10 +17,10 @@
         "coordinates": [92, -97]
       },
       "properties": {
-        "name": "Cuisine 2",
-        "floor": "RDC",
+        "name": "Kitchen 2",
+        "floor": "floor1",
         "type": "image",
-        "data": "/datas/cuisine2.jpg"
+        "data": "/datas/kitchen2.jpg"
       }
     },
     {
@@ -29,10 +29,10 @@
         "coordinates": [86, -105]
       },
       "properties": {
-        "name": "Cuisine 3",
-        "floor": "RDC",
+        "name": "Kitchen 3",
+        "floor": "floor1",
         "type": "html",
-        "data": "Faire attention au nombre de luminaires (type suspension) <br> pour ne pas géner l'ouverture de la porte du meuble haut"
+        "data": "Be careful with the number of lights (suspension type) <br> so as not to obstruct the opening of the wall cabinet door"
       }
     },
     {
@@ -41,10 +41,10 @@
         "coordinates": [12, -42]
       },
       "properties": {
-        "name": "Chambre 1",
-        "floor": "R+1",
+        "name": "Room 1",
+        "floor": "floor2",
         "type": "image",
-        "data": "/datas/idee.webp"
+        "data": "/datas/idea.webp"
       }
     },
     {
@@ -53,10 +53,10 @@
         "coordinates": [37, -69]
       },
       "properties": {
-        "name": "Chambre 2",
-        "floor": "R+1",
+        "name": "Room 2",
+        "floor": "floor2",
         "type": "html",
-        "data": "Vérification à faire sur le l'ouverture de la porte"
+        "data": "Checking door opening"
       }
     }
   ]

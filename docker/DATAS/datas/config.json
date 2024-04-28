@@ -1,14 +1,13 @@
 {
-    "RDC": {
-      "classique": "datas/RDC.svg",
-      "eclairage": "datas/RDC_lumiere.svg",
-      "electrique": "datas/RDC_electricite.svg"
-    },
+  "floor1": {
+    "nofilter": "datas/floor1.svg",
+    "lights": "datas/floor1_lights.svg",
+    "electricity": "datas/floor1_electricity.svg"
+  },
 
-    "R+1": {
-      "classique": "datas/R+1.svg",
-      "eclairage": "datas/R+1_lumiere.svg",
-      "electrique": "datas/R+1_electricite.svg"
-    }
+  "floor2": {
+    "nofilter": "datas/floor2.svg",
+    "lights": "datas/floor2_lights.svg",
+    "electricity": "datas/floor2_electricity.svg"
   }
-  
+}
