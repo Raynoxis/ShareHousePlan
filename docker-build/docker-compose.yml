@@ -1,7 +1,9 @@
 services:
   sharehouseplan:
+    build:
+      context: ../
+      dockerfile: ./docker-build/Dockerfile
     container_name: ShareHousePlan
-    image: raynoxis/sharehouseplan:v1.1
     restart: always
     volumes:
       - ./datas:/app/datas

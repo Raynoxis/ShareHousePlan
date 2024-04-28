@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-    <title>Accueil Maison</title>
+    <title>ShareHousePlan</title>
     <link rel="icon" type="image/x-icon" href="favicon.ico">
     <link rel='stylesheet' type='text/css' media='screen' href="style.css">
     <link rel="manifest" href="manifest.json">
@@ -12,7 +12,7 @@
 <body>
     <div class="container">
         <div class="top-bar">                
-            <!-- <div class="center-title">MaisonMap</div> -->
+            <!-- <div class="center-title">ShareHousePlan</div> -->
             <div class="left-controls"></div>
             <div class="left-controls2">
                 <select id="filter-dropdown" class="filter-style"></select>
@@ -34,7 +34,7 @@
         if ('serviceWorker' in navigator) {
             navigator.serviceWorker.register('sw.js')
             .then(function(){
-                console.log("Service Worker enregistré")
+                console.log("Service Worker registered")
             })
         }
     </script>

@@ -1,12 +1,12 @@
 {
-    "name":"Ma Progressive App Maison",
-    "short_name": "PWA Maison",
+    "name":"ShareHousePlan",
+    "short_name": "ShareHousePlan",
     "start_url":"index.html",
     "background_color": "#000",
     "display": "standalone",
     "scope": ".",
     "theme_color": "#888",
-    "description": "Plan",
+    "description": "Web House Plan",
     "icons": [
         {
             "src": "apple-touch-icon-57x57.png",

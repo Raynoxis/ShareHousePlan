@@ -5,7 +5,7 @@ FROM node:18-alpine
 WORKDIR /app
 
 #Then we copy our package.json file from our local system to the docker image.
-COPY ./docker/package.json .
+COPY ./docker-build/package.json .
 
 #Then we run npm install inside the docker image to install all our dependencies.
 RUN npm install

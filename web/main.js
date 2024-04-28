@@ -255,7 +255,6 @@ const map = new Map({
     }),
 });
 map.addLayer(backgroundLayer);
-//map.addLayer(vectorLayer);
 
 
 // ############################################################################################## LAYER 2 ##########
