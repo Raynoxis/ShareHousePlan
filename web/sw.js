@@ -2,8 +2,6 @@ const CACHE_NAME = 'my-site-cache-v1';
 const urlsToCache = [
     'style.css',
     'main.js',
-    'R+1.svg',
-    'RDC.svg',
     'offline.html',
     'favicon.ico',
 ];
