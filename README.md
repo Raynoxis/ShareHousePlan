@@ -32,6 +32,29 @@ services:
     ports:
       - 8080:8080
 ```
+
+# SweetHome3D Use
+- Before all, you have to install a Plug-in on SweetHome3D to enhances the export to SVG (better compression for Web..)
+https://sourceforge.net/p/sweethome3d/plug-ins/43/
+
+- First you haves to create some classic floor on SweetHome3D like : Floor1 or Floor2 and design your house floor by floor.
+  
+- After, for all your filters, you have to create somes "Floor of same Elevation" depending Floor1, and depending Floor2.
+  
+- Finally you can show/hide each to have the result : Floor + Filter
+  
+![SweetHome3D1](https://github.com/Raynoxis/ShareHousePlan/assets/34026291/a37781eb-04af-4db0-9ce9-774f723bb069)
+*Example to generate 'floor1_electricity.svg' : I add layers : 'Floor1' + 'Floor1 Elec'*
+
+***
+
+![SweetHome3D2](https://github.com/Raynoxis/ShareHousePlan/assets/34026291/d0007e33-bf2b-495e-95c6-c911f7e27fdb)
+ *With the active selection on 'Floor1 Elec' i can generate 'floor1_electricity.svg' (Before i hide 'Floor1 Legend' and 'Floor1 Lights')*
+
+ - (OPTIONAL) : Install the Plug-in : '2DSymbols' on SweetHome3D, to have the same symbols as me.
+
+***
+
 # Configuration
 ## Datas
 In **/app/datas** folder, you need to put all the configuration files and the datas.
@@ -133,21 +156,5 @@ When you open the application, you can click on an area of interest, and retriev
     }
   ]
 ```
-# SweetHome3D Use
-- Before all, you have to install a Plug-in on SweetHome3D to enhances the export to SVG (better compression for Web..)
-https://sourceforge.net/p/sweethome3d/plug-ins/43/
-
-- First you haves to create some classic floor on SweetHome3D like : Floor1 or Floor2 and design your house floor by floor.
-  
-- After, for all your filters, you have to create somes "Floor of same Elevation" depending Floor1, and depending Floor2.
-  
-- Finally you can show/hide each to have the result : Floor + Filter
-![SweetHome3D1](https://github.com/Raynoxis/ShareHousePlan/assets/34026291/a37781eb-04af-4db0-9ce9-774f723bb069)
-*Example to generate Floor1_electricity : I add layers : Floor1 + Floor1 Elec.*
-
-![SweetHome3D2](https://github.com/Raynoxis/ShareHousePlan/assets/34026291/d0007e33-bf2b-495e-95c6-c911f7e27fdb)
- *With the selection on Floor1 Elec i can generate .svg.*
-
-
 ## License
 [![GPLv3 License](https://img.shields.io/badge/License-GPL%20v3-yellow.svg)](https://opensource.org/licenses/)
