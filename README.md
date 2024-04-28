@@ -6,13 +6,16 @@ I'll show you how it works soon on my Youtube channel. : https://www.youtube.com
 # Demo
 https://github.com/Raynoxis/ShareHousePlan/assets/34026291/2e8e0695-2fb9-4044-93f0-3aad52ffe1ca
 
+##Demo PC
+[demoPc.webm](https://github.com/Raynoxis/ShareHousePlan/assets/34026291/a60e24d3-3a94-40ad-9c98-d11a470a8788)
+
 # Deployment
 ## docker-compose.yml
 ```yaml
 services:
   sharehouseplan:
     container_name: ShareHousePlan-Test
-    image: raynoxis/sharehouseplan:version1.0
+    image: raynoxis/sharehouseplan:v1.1
     restart: always
     volumes:
       - ./datas:/app/datas
