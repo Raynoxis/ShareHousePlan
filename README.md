@@ -1,12 +1,27 @@
-# Introduction
-ShareHousePlan lets you share the plans of a house under construction, which are in the format of “*.SVG*” files (Example : SweetHome3D export). ShareHousePlan lets you manage the different floors of the building, with filters and interest points (linked img, pdf, html) you can add. It's a PWA (Web app), which can be deployed as a Docker container.
+# ShareHousePlan
+**Share the plans of your house** under construction with **everyone** involved in the **construction process**, as well as with your family and friends. 
+This application allows you to display an **interactive map** of the various construction **floors**, with **filters** and **points of interest**. These display **text, images and PDFs** at specific points on the floor plan and **you can customize everything** to suit your needs.
 
-I'll show you how it works soon on my Youtube channel. : https://www.youtube.com/@Raynoxis (*French*)
-- Creation in SweetHome3D (with SVG export)
+ShareHousePlan's interface works equally well on cell phones and PCs, and can be installed locally (PWA) to operate without the Internet.
+![pwaInstallExample](https://github.com/Raynoxis/ShareHousePlan/assets/34026291/6224d215-b97b-476b-80db-810bc5d025d2)
+
+***
+![Sweet Home 3D](https://www.sweethome3d.com/images/SweetHome3DLogo.png)
+
+I created this application to display a SweetHome3D plan. You can use another application, but you must be able to generate ```.svg``` files.
+
+[Sweet Home 3D](https://www.sweethome3d.com) is a free interior design application
+which helps you draw the plan of your house, arrange furniture on it and visit the results in 3D. 
+
+***
+<img src="https://www.gstatic.com/youtube/img/branding/youtubelogo/svg/youtubelogo.svg" width="150">
+
+I'll show you how it works soon on my Youtube channel : https://www.youtube.com/@Raynoxis (*French*)
+- Creation in SweetHome3D (with ```.svg``` export)
 - The configuration of the application.
 
 **[Subscribe](https://www.youtube.com/@Raynoxis)** if you want to help me ! Bye ;)
-  
+ 
 ***
 
 ## Demo PC
@@ -28,7 +43,7 @@ I'll show you how it works soon on my Youtube channel. : https://www.youtube.com
 services:
   sharehouseplan:
     container_name: ShareHousePlan
-    image: raynoxis/sharehouseplan:v1.1
+    image: raynoxis/sharehouseplan:v1.2
     restart: always
     volumes:
       - ./datas:/app/datas
@@ -37,7 +52,7 @@ services:
 ```
 
 # SweetHome3D Use
-- Before all, you have to install a Plug-in on SweetHome3D to enhances the export to SVG (better compression for Web..)
+- Before all, you have to install a Plug-in on SweetHome3D to enhances the export to ```.svg``` (better compression for Web..)
 https://sourceforge.net/p/sweethome3d/plug-ins/43/
 
 - First you haves to create some classic floor on SweetHome3D like : Floor1 or Floor2 and design your house floor by floor.
@@ -47,12 +62,12 @@ https://sourceforge.net/p/sweethome3d/plug-ins/43/
 - Finally you can show/hide each to have the result : Floor + Filter
   
 ![SweetHome3D1](https://github.com/Raynoxis/ShareHousePlan/assets/34026291/a37781eb-04af-4db0-9ce9-774f723bb069)
-*Example to generate 'floor1_electricity.svg' : I add layers : 'Floor1' + 'Floor1 Elec'*
+*Example to generate ```floor1_electricity.svg``` : I add layers : 'Floor1' + 'Floor1 Elec'*
 
 ***
 
 ![SweetHome3D2](https://github.com/Raynoxis/ShareHousePlan/assets/34026291/d0007e33-bf2b-495e-95c6-c911f7e27fdb)
- *With the active selection on 'Floor1 Elec' i can generate 'floor1_electricity.svg' (Before i hide 'Floor1 Legend' and 'Floor1 Lights')*
+ *With the active selection on 'Floor1 Elec' i can generate ```floor1_electricity.svg``` (Before i hide 'Floor1 Legend' and 'Floor1 Lights')*
 
  - (OPTIONAL) : Install the Plug-in : '2DSymbols' on SweetHome3D, to have the same symbols as me.
 
@@ -66,10 +81,10 @@ https://sourceforge.net/p/sweethome3d/plug-ins/43/
 In **/app/datas** folder, you need to put all the configuration files and the datas.
 | Name | Description|
 | --- | --- |
-| *config.json* | This file allows you to create the floors and their associated filters. Floors and Filters are associated to specific *.SVG* file. |
-| *points.json* | This file allows you to create points at specific coordinates on the plan. Each point is associated with a floor, and opens the viewing of a file (*text, pdf, img*) when clicked.  |
-| *.svg* | Put all *.SVG* files for all your floors and filters. (Example below) |
-| others files.. | Put all files needed by your *point.json* (jpg, webp, png, pdf, etc..) |
+| ```config.json``` | This file allows you to create the floors and their associated filters. Floors and Filters are associated to specific ```.svg``` file. |
+| ```points.json``` | This file allows you to create points at specific coordinates on the plan. Each point is associated with a floor, and opens the viewing of a file (*text, pdf, img*) when clicked.  |
+| ```.svg``` | Put all ```.svg``` files for all your floors and filters. (Example below) |
+| *others files..* | Put all files needed by your *point.json* (jpg, webp, png, pdf, etc..) |
 
 ##### Example
 ![demoDatas](https://github.com/Raynoxis/ShareHousePlan/assets/34026291/cedbd14e-68c2-4050-83b0-ed7692f7733d)
@@ -162,5 +177,4 @@ When you open the application, you can click on an area of interest, and retriev
     }
   ]
 ```
-## License
-[![GPLv3 License](https://img.shields.io/badge/License-GPL%20v3-yellow.svg)](https://opensource.org/licenses/)
+[![GPLv3 License](https://img.shields.io/badge/License-GPL%20v3-yellow.svg)](https://opensource.org/licenses/) 
