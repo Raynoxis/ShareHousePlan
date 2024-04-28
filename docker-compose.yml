@@ -1,0 +1,12 @@
+services:
+  maisonmap:
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    container_name: maisonmap
+    restart: always
+    # Pass in your config file below, by specifying the path on your host machine
+    volumes:
+      - ./DATAS/datas:/app/datas
+    ports:
+      - 54321:8080
