@@ -1,0 +1,62 @@
+[
+    {
+      "geometry": {
+        "type": "Point",
+        "coordinates": [80, -85]
+      },
+      "properties": {
+        "name": "Kitchen 1",
+        "floor": "floor1",
+        "type": "image",
+        "data": "/datas/points/kitchen1.jpg"
+      }
+    },
+    {
+      "geometry": {
+        "type": "Point",
+        "coordinates": [92, -97]
+      },
+      "properties": {
+        "name": "Kitchen 2",
+        "floor": "floor1",
+        "type": "image",
+        "data": "/datas/points/kitchen2.jpg"
+      }
+    },
+    {
+      "geometry": {
+        "type": "Point",
+        "coordinates": [86, -105]
+      },
+      "properties": {
+        "name": "Kitchen 3",
+        "floor": "floor1",
+        "type": "html",
+        "data": "Be careful with the number of lights (suspension type) <br> so as not to obstruct the opening of the wall cabinet door"
+      }
+    },
+    {
+      "geometry": {
+        "type": "Point",
+        "coordinates": [12, -42]
+      },
+      "properties": {
+        "name": "Room 1",
+        "floor": "floor2",
+        "type": "image",
+        "data": "/datas/points/idea.webp"
+      }
+    },
+    {
+      "geometry": {
+        "type": "Point",
+        "coordinates": [37, -69]
+      },
+      "properties": {
+        "name": "Room 2",
+        "floor": "floor2",
+        "type": "html",
+        "data": "Checking door opening"
+      }
+    }
+  ]

@@ -19,25 +19,110 @@ import { Fancybox } from "@fancyapps/ui";
 import "@fancyapps/ui/dist/fancybox/fancybox.css";
 
 
-let selectedFloor = ""; // Variable pour enregistrer l'étage sélectionné
-//############################################################################################## ACTIONS #################################################################################################   
-// Charger les données svgFiles depuis le fichier JSON
-fetch('datas/config.json')
-  .then(response => response.json())
-  .then(data => {
-    // Utiliser les données pour la suite du script
-    const svgFiles = data;
+// Fonction pour charger un fichier JSON
+function loadJSON(url) {
+  return fetch(url)
+    .then(response => {
+      if (!response.ok) {
+        throw new Error(`Erreur de chargement du fichier JSON depuis ${url}`);
+      }
+      return response.json();
+    });
+}
 
+// Charger plusieurs fichiers JSON simultanément
+Promise.all([
+  loadJSON('datas/svg/floors.json'),
+  loadJSON('datas/config.json'),
+  loadJSON('datas/points/points.json')
+])
+.then(data => {
+  // Les données sont disponibles ici dans l'ordre dans lequel elles ont été chargées
+    const floors = data[0];
+    const config = data[1];
+    const points = data[2];
+
+    // Charger les valeurs de la sous-catégorie "image"
+    const imageExtent = config.image.extent;
+
+    // Charger les valeurs de la sous-catégorie "map"
+    const mapCenter = config.map.center;
+    const mapExtent = config.map.extent;
+    const mapProjection = config.map.projection;
+    const mapZoom = config.map.zoom;
+
+    // Charger les valeurs de la sous-catégorie "icon"
+    const iconAnchor = config.icon.anchor;
+    const iconSrc = config.icon.src;
+    const iconWidth = config.icon.width;
+    const iconHeight = config.icon.height;
+
+    // Charger les valeurs de la sous-catégorie "3d"
+    const file3d = config.html5.file;
+
+    function getAllSelectableLevels() {
+        let allSelectableLevels = [];
+        for (const floor in floors) {
+            const parameters = floors[floor].parameters;
+            if (parameters && parameters.level3D.trim() !== "") {
+                allSelectableLevels.push(parameters.level3D);
+            }
+        }
+        return allSelectableLevels;
+    }
+    const getSelectableLevels = getAllSelectableLevels();
+
+    // Global variables
+    let selectedFloor = ""; // Variable pour enregistrer l'étage sélectionné
+
+    const backgroundLayer = new ImageLayer({
+    });
+
+    // Créer l'objet IconStyle
+    const iconStyle = new Style({
+      image: new Icon({
+        anchor: iconAnchor,
+        src: iconSrc,
+        width: iconWidth,
+        height: iconHeight,
+      }),
+    });
+
+    // Créer la map
+    const map = new Map({
+      target: document.getElementById('map'),
+      view: new View({
+        center: mapCenter,
+        extent: mapExtent,
+        projection: mapProjection,
+        zoom: mapZoom,
+      }),
+    });
+    map.addLayer(backgroundLayer);
+
+
+//############################################################################################## ACTIONS #################################################################################################   
     // Fonction pour charger et afficher un SVG en fonction du filtre sélectionné et du niveau sélectionné
     function loadFilteredSVG(floor, filter) {
-        const svgFile = svgFiles[floor][filter];
+        const svgFile = floors[floor].filters[filter];
         loadSVG(svgFile);
+    }
+
+    // Fonction pour charger la valeur de level3D en fonction de l'étage sélectionné
+    function loadLevel3D(selectedFloor) {
+        const parameters = floors[selectedFloor].parameters;
+        if (parameters && parameters.level3D.trim() !== "") {
+            btn3D.style.display = 'block';
+            return parameters.level3D;
+        } else {
+            btn3D.style.display = 'none';
+        }
     }
 
     // Fonction pour charger les options de filtre pour un étage spécifique
     function loadFloorFilters(floor) {
         const dropdown = document.getElementById('filter-dropdown');
-        const filters = Object.keys(svgFiles[floor]);
+        const filters = Object.keys(floors[floor].filters);
 
         // Effacer les options existantes
         dropdown.innerHTML = '';
@@ -71,16 +156,19 @@ fetch('datas/config.json')
         // Récupérer le filtre actuel
         const currentFilter = document.getElementById('filter-dropdown').value;
 
-        // Charger les filtres pour l'étage sélectionné
+        // Charger les filters pour l'étage sélectionné
         selectedFloor = event.target.textContent;
         loadFloorFilters(selectedFloor);
         loadPointsOfInterest(selectedFloor);
 
         // Charger le SVG filtré par le filtre actuel s'il existe pour le nouvel étage, sinon charger le premier filtre disponible
-        const availableFilters = Object.keys(svgFiles[selectedFloor]);
+        const availableFilters = Object.keys(floors[selectedFloor].filters);
         const newFilter = availableFilters.includes(currentFilter) ? currentFilter : availableFilters[0];
         document.getElementById('filter-dropdown').value = newFilter;
         loadFilteredSVG(selectedFloor, newFilter);
+
+        // Charger la valeur de level3D et l'afficher
+        loadLevel3D(selectedFloor);
     }
 
 
@@ -88,7 +176,7 @@ fetch('datas/config.json')
     function createFloorButtons() {
         const container = document.querySelector('.left-controls');
         let isFirst = true;
-        for (const floor in svgFiles) {
+        for (const floor in floors) {
             const button = document.createElement('button');
             button.textContent = floor;
             button.classList.add('floor-button');
@@ -106,57 +194,58 @@ fetch('datas/config.json')
 // ############################################################################################## BUTTONS ##########
 
 
-
-
 // ############################################################################################## LISTE ##########
 // Fonction pour créer la liste déroulante des étages
-function createFloorDropdown() {
-    const container = document.querySelector('.left-controls');
-    const dropdown = document.createElement('select');
-    dropdown.id = 'floor-dropdown';
-    dropdown.classList.add('filter-style'); // Ajout de la classe filter-style
-    
-    // Ajouter un événement de changement pour la liste déroulante
-    dropdown.addEventListener('change', handleFloorDropdownChange);
-    
-    // Ajouter les options de la liste déroulante
-    for (const floor in svgFiles) {
-        const option = document.createElement('option');
-        option.value = floor;
-        option.textContent = floor;
-        dropdown.appendChild(option);
+    function createFloorDropdown() {
+        const container = document.querySelector('.left-controls');
+        const dropdown = document.createElement('select');
+        dropdown.id = 'floor-dropdown';
+        dropdown.classList.add('filter-style'); // Ajout de la classe filter-style
+        
+        // Ajouter un événement de changement pour la liste déroulante
+        dropdown.addEventListener('change', handleFloorDropdownChange);
+        
+        // Ajouter les options de la liste déroulante
+        for (const floor in floors) {
+            const option = document.createElement('option');
+            option.value = floor;
+            option.textContent = floor;
+            dropdown.appendChild(option);
+        }
+
+        container.appendChild(dropdown);
+
+        // Appel de la fonction pour gérer le changement d'étage initial
+        handleFloorDropdownChange({ target: dropdown }); // Appel de la fonction avec un objet simulant l'événement pour charger les éléments initiaux
     }
 
-    container.appendChild(dropdown);
-
-    // Appel de la fonction pour gérer le changement d'étage initial
-    handleFloorDropdownChange({ target: dropdown }); // Appel de la fonction avec un objet simulant l'événement pour charger les éléments initiaux
-}
-
 // Fonction pour gérer le changement d'étage depuis la liste déroulante
-function handleFloorDropdownChange(event) {
-    const currentFilter = document.getElementById('filter-dropdown').value;
-    
-    selectedFloor = event.target.value;
-    loadFloorFilters(selectedFloor);
-    loadPointsOfInterest(selectedFloor);
+    function handleFloorDropdownChange(event) {
+        const currentFilter = document.getElementById('filter-dropdown').value;
+        
+        selectedFloor = event.target.value;
+        loadFloorFilters(selectedFloor);
+        loadPointsOfInterest(selectedFloor);
 
-    // Charger le SVG filtré par le filtre actuel s'il existe pour le nouvel étage, sinon charger le premier filtre disponible
-    const availableFilters = Object.keys(svgFiles[selectedFloor]);
-    const newFilter = availableFilters.includes(currentFilter) ? currentFilter : availableFilters[0];
-    document.getElementById('filter-dropdown').value = newFilter;
-    loadFilteredSVG(selectedFloor, newFilter);
-}
+        // Charger le SVG filtré par le filtre actuel s'il existe pour le nouvel étage, sinon charger le premier filtre disponible
+        const availableFilters = Object.keys(floors[selectedFloor].filters);
+        const newFilter = availableFilters.includes(currentFilter) ? currentFilter : availableFilters[0];
+        document.getElementById('filter-dropdown').value = newFilter;
+        loadFilteredSVG(selectedFloor, newFilter);
+
+        // Charger la valeur de level3D et l'afficher
+        loadLevel3D(selectedFloor);
+    }
 // ############################################################################################## LISTE ##########
 
 
 // ############################################################################################## COUCHE ##########
-    // Fonction pour créer la liste déroulante des filtres
+    // Fonction pour créer la liste déroulante des filters
     function createFilterDropdown(selectedFloor) {
         const dropdown = document.getElementById('filter-dropdown');
         dropdown.innerHTML = ''; // Effacer les options existantes
 
-        const filters = Object.keys(svgFiles[selectedFloor]);
+        const filters = Object.keys(floors[selectedFloor].filters);
 
         // Ajouter les options de la liste déroulante
         filters.forEach(filter => {
@@ -172,7 +261,7 @@ function handleFloorDropdownChange(event) {
         const dropdown = document.getElementById('filter-dropdown');
         dropdown.innerHTML = ''; // Effacer les options existantes
 
-        const filters = Object.keys(svgFiles[selectedFloor]);
+        const filters = Object.keys(floors[selectedFloor].filters);
 
         // Ajouter les options
         filters.forEach(filter => {
@@ -192,12 +281,24 @@ function handleFloorDropdownChange(event) {
         });
     }
     handleFilterDropdownChange();
+
+    function handle3DButtonClick(event) {
+        const url = `3D/viewHome.html?homeUrl=${encodeURIComponent(file3d)}&getLevel=${encodeURIComponent(loadLevel3D(selectedFloor))}&getSelectableLevels=${encodeURIComponent(JSON.stringify(getSelectableLevels))}`;
+        Fancybox.show([
+            {
+                src: url,
+                type: 'iframe' // Peut être 'iframe', 'image', etc.
+            }
+        ]);
+    }
+    const btn3D = document.getElementById('btn3D');
+    btn3D.addEventListener('click', handle3DButtonClick);
 // ############################################################################################## COUCHE ##########
 
 
 // ############################################################################################## INIT ##########
     // Vérifier si l'utilisateur est sur un téléphone mobile et le nombre d'étages est supérieur à 2
-    if (isMobileDevice() && Object.keys(svgFiles).length > 2) {
+    if (isMobileDevice() && Object.keys(floors).length > 2) {
         // Supprimer les boutons d'étages existants s'ils existent
         const floorButtons = document.querySelectorAll('.floor-button');
         floorButtons.forEach(button => {
@@ -209,151 +310,117 @@ function handleFloorDropdownChange(event) {
     }
 
     // INIT : Appelez la fonction pour créer les options du menu déroulant lors du chargement de la page
-    selectedFloor = Object.keys(svgFiles)[0];
+    selectedFloor = Object.keys(floors)[0];
     createFilterOptions(selectedFloor);
     loadPointsOfInterest(selectedFloor);
-    const defaultFilter = Object.keys(svgFiles[selectedFloor])[0];
+    const defaultFilter = Object.keys(floors[selectedFloor].filters)[0];
     loadFilteredSVG(selectedFloor, defaultFilter);
+    loadLevel3D(selectedFloor);
 // ############################################################################################## INIT ##########
-})
-  .catch(error => console.error('Erreur lors du chargement du fichier JSON :', error));
-//############################################################################################## ACTIONS #################################################################################################
-
-
 
 
 //############################################################################################## OPENLAYER ##############################################################################################
 // ############################################################################################## LAYER 1 ##########
-const backgroundLayer = new ImageLayer({
-});
-
-// Fonction pour charger un SVG à partir d'une URL
-function loadSVG(url) {
-    // Créer une nouvelle source d'image avec l'URL fournie
-    const imageSource = new ImageSource({
-        loader: createStatic({
-            url: url,
-            imageExtent: [-180, -337, 284, 180],
-            load: load,
-        }),
-    });
-    // Mettre à jour la source de la couche de fond avec la nouvelle source d'image
-    backgroundLayer.setSource(imageSource);
-    backgroundLayer.setZIndex(1);
-}
-
-
-// ############################################################################################## MAP ##########
-const map = new Map({
-    //layers: [backgroundLayer, vectorLayer],
-    target: document.getElementById('map'),
-    view: new View({
-        center: [51, -71],
-        extent: [-180, -337, 284, 180], // topleft right | bottomright left | bottomright right | topleft left
-        projection: 'EPSG:4326',
-        zoom: 2,
-    }),
-});
-map.addLayer(backgroundLayer);
+    // Fonction pour charger un SVG à partir d'une URL
+    function loadSVG(url) {
+        // Créer une nouvelle source d'image avec l'URL fournie
+        const imageSource = new ImageSource({
+            loader: createStatic({
+                url: url,
+                imageExtent: imageExtent,
+                load: load,
+            }),
+        });
+        // Mettre à jour la source de la couche de fond avec la nouvelle source d'image
+        backgroundLayer.setSource(imageSource);
+        backgroundLayer.setZIndex(1);
+    }
 
 
 // ############################################################################################## LAYER 2 ##########
-const iconStyle = new Style({
-  image: new Icon({
-    anchor: [0, 0],
-    anchorXUnits: 'pixels',
-    anchorYUnits: 'pixels',
-    src: 'magnifier.png',
-    width: 30,
-    height: 30,
-  }),
-});
+    // Fonction pour créer une entité (feature) à partir des données d'un point
+    function createIconFeature(geometryCoordinates, properties) {
+        const pointGeometry = new Point(geometryCoordinates);
 
+        // Créer l'entité (feature)
+        const iconFeature = new Feature({
+            geometry: pointGeometry,
+            name: properties.name,
+            type: properties.type,
+            data: properties.data
+        });
 
-// Fonction pour créer une entité (feature) à partir des données d'un point
-function createIconFeature(geometryCoordinates, properties) {
-    const pointGeometry = new Point(geometryCoordinates);
+        // Ajout du style
+        iconFeature.setStyle(iconStyle);
 
-    // Créer l'entité (feature)
-    const iconFeature = new Feature({
-        geometry: pointGeometry,
-        name: properties.name,
-        type: properties.type,
-        data: properties.data
-    });
+        return iconFeature;
+    }
 
-    // Ajout du style
-    iconFeature.setStyle(iconStyle);
+    // Créer une fonction pour charger les points d'intérêt correspondant à un étage spécifique
+    function loadPointsOfInterest(floor) {
+        // Créer une source vectorielle
+        const vectorSource = new VectorSource();
 
-    return iconFeature;
-}
+        // Filtrer les points d'intérêt correspondant à l'étage sélectionné
+        const filteredPoints = points.filter(point => point.properties.floor === floor);
 
+        // Ajouter les points d'intérêt filtrés à la source vectorielle
+        filteredPoints.forEach(pointData => {
+            const iconFeature = createIconFeature(pointData.geometry.coordinates, pointData.properties);
+            vectorSource.addFeature(iconFeature);
+        });
 
-// Créer une fonction pour charger les points d'intérêt correspondant à un étage spécifique
-function loadPointsOfInterest(floor) {
-    fetch('datas/points.json')
-        .then(response => response.json())
-        .then(data => {
-            // Créer une source vectorielle
-            const vectorSource = new VectorSource();
+        // Supprimer toutes les couches vectorielles existantes de la carte
+        map.getLayers().forEach(layer => {
+            if (layer instanceof VectorLayer) {
+                map.removeLayer(layer);
+            }
+        });
 
-            // Filtrer les points d'intérêt correspondant à l'étage sélectionné
-            const filteredPoints = data.filter(point => point.properties.floor === floor);
+        // Créer une couche vectorielle avec la source vectorielle
+        const vectorLayer = new VectorLayer({
+            source: vectorSource
+        });
+        vectorLayer.setZIndex(9999);
 
-            // Ajouter les points d'intérêt filtrés à la source vectorielle
-            filteredPoints.forEach(pointData => {
-                const iconFeature = createIconFeature(pointData.geometry.coordinates, pointData.properties);
-                vectorSource.addFeature(iconFeature);
-            });
+        // Ajouter la couche vectorielle à la carte
+        map.addLayer(vectorLayer);
+    }
 
-            // Supprimer toutes les couches vectorielles existantes de la carte
-            map.getLayers().forEach(layer => {
-                if (layer instanceof VectorLayer) {
-                    map.removeLayer(layer);
-                }
-            });
-
-            // Créer une couche vectorielle avec la source vectorielle
-            const vectorLayer = new VectorLayer({
-                source: vectorSource
-            });
-            vectorLayer.setZIndex(9999);
-
-            // Ajouter la couche vectorielle à la carte
-            map.addLayer(vectorLayer);
-        })
-        .catch(error => console.error('Erreur lors du chargement du fichier JSON :', error));
-}
-
-// Appeler la fonction loadPointsOfInterest pour charger les points d'intérêt initiaux lors du chargement de la page
-loadPointsOfInterest(selectedFloor);
+    // Appeler la fonction loadPointsOfInterest pour charger les points d'intérêt initiaux lors du chargement de la page
+    loadPointsOfInterest(selectedFloor);
 //############################################################################################## OPENLAYER ##############################################################################################
 
 
 //############################################################################################## MAP EVENTS ##############################################################################################
-// Ajout de l'événement de clic pour récupérer les coordonnées et les afficher
-map.on('click', function(event) {
-    const coordinates = event.coordinate;
-    document.getElementById('y').value = parseInt(coordinates[1]);
-    document.getElementById('x').value = parseInt(coordinates[0]);
-});
-
-// change mouse cursor when over marker
-map.on('pointermove', function (e) {
-  const pixel = map.getEventPixel(e.originalEvent);
-  const hit = map.hasFeatureAtPixel(pixel);
-  map.getTarget().style.cursor = hit ? 'pointer' : '';
-});
-
-// Ajouter un événement de clic pour les points d'intérêt
-map.on('singleclick', function(event) {
-    map.forEachFeatureAtPixel(event.pixel, function(feature) {
-        Fancybox.show([
-            {
-                src: feature.get('data'),
-                type: feature.get('type')
-            }
-        ]);
+    // Ajout de l'événement de clic pour récupérer les coordonnées et les afficher
+    map.on('click', function(event) {
+        const coordinates = event.coordinate;
+        document.getElementById('y').value = parseInt(coordinates[1]);
+        document.getElementById('x').value = parseInt(coordinates[0]);
     });
+
+    // change mouse cursor when over marker
+    map.on('pointermove', function (e) {
+      const pixel = map.getEventPixel(e.originalEvent);
+      const hit = map.hasFeatureAtPixel(pixel);
+      map.getTarget().style.cursor = hit ? 'pointer' : '';
+    });
+
+    // Ajouter un événement de clic pour les points d'intérêt
+    map.on('singleclick', function(event) {
+        map.forEachFeatureAtPixel(event.pixel, function(feature) {
+            Fancybox.show([
+                {
+                    src: feature.get('data'),
+                    type: feature.get('type')
+                }
+            ]);
+        });
+    });
+//############################################################################################## MAP EVENTS ##############################################################################################
+
+})
+.catch(error => {
+  console.error('Erreur lors du chargement des fichiers JSON :', error);
 });
-    //############################################################################################## MAP EVENTS ##############################################################################################

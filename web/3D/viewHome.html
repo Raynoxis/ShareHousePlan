@@ -1,0 +1,157 @@
+  <!--
+     viewHome.html  version 1.7  
+     
+     Sweet Home 3D, Copyright (c) 2016-2020 Emmanuel PUYBARET / eTeks <info@eteks.com>
+     
+     This program is free software; you can redistribute it and/or modify
+     it under the terms of the GNU General Public License as published by
+     the Free Software Foundation; either version 2 of the License, or
+     (at your option) any later version.
+   
+     This program is distributed in the hope that it will be useful,
+     but WITHOUT ANY WARRANTY; without even the implied warranty of
+     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+     GNU General Public License for more details.
+
+     You should have received a copy of the GNU General Public License
+     along with this program; if not, write to the Free Software
+     Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+   -->
+  <!--
+    To view this file locally without a HTTP server, be sure to allow access from files in your browser   
+    https://www.google.com/search?q=allow+access+from+files  
+  -->
+  <html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>View home with Sweet Home 3D HTML5 Viewer</title>
+
+    <!--  Copy the following scripts in your page header -->
+    <script type="text/javascript" src="lib/big.min.js"></script>
+    <script type="text/javascript" src="lib/gl-matrix-min.js"></script>
+    <script type="text/javascript" src="lib/jszip.min.js"></script>
+    <script type="text/javascript" src="lib/core.min.js"></script>
+    <script type="text/javascript" src="lib/geom.min.js"></script>
+    <script type="text/javascript" src="lib/stroke.min.js"></script>
+    <script type="text/javascript" src="lib/batik-svgpathparser.min.js"></script>
+    <script type="text/javascript" src="lib/jsXmlSaxParser.min.js"></script>
+    <script type="text/javascript" src="lib/triangulator.min.js"></script>
+    <script type="text/javascript" src="lib/viewmodel.min.js"></script>
+    <script type="text/javascript" src="lib/viewhome.min.js"></script>
+
+    <style type="text/css">
+      /* The class of components handled by the viewer */
+      .viewerComponent  {
+      }
+      /* To display the viewer in full screen, uncomment the 3 following styles */
+
+      body {
+        overflow-x: hidden;
+        overflow-y: hidden;
+        margin: 0;
+      }
+      #viewerCanvas {
+        width: 100%;
+        height: 100%;
+      }
+      #viewerNavigationDiv {
+        position: absolute; 
+        bottom: 5px;
+        left: 5px;
+      }
+
+    </style>
+  </head>
+
+  <body>
+    <div>
+      <!-- Copy the following canvas and components in your page, changing their size / texts and other values if needed  -->
+      <canvas id="viewerCanvas" class="viewerComponent" width="800" height="600"
+      style="background-color: #CCCCCC; border: 1px solid gray; outline:none" tabIndex="1"></canvas>
+      <div id="viewerProgressDiv" style="width: 400px; position: relative; top: -350px; left: 200px; background-color: rgba(128, 128, 128, 0.7); padding: 20px; border-radius: 25px">
+        <progress id="viewerProgress"  class="viewerComponent" value="0" max="200" style="width: 400px"></progress>
+        <label id="viewerProgressLabel" class="viewerComponent" style="margin-top: 2px; display: block; margin-left: 10px"></label>
+      </div>
+      <div id="viewerNavigationDiv" style="margin-top: -60px">
+        <input  id="aerialView"   class="viewerComponent" name="cameraType" type="radio" style="visibility: hidden;"/>
+        <label class="viewerComponent" for="aerialView" style="visibility: hidden;">Aerial view</label>
+        <input  id="virtualVisit" class="viewerComponent" name="cameraType" type="radio" style="visibility: hidden;"/>
+        <label class="viewerComponent" for="virtualVisit" style="visibility: hidden;">Virtual visit</label>
+        <select id="levelsAndCameras" class="viewerComponent" style="visibility: hidden;"></select>
+      </div>
+    </div>
+    <div style="position: absolute; bottom: 5px; text-align: center; width: 95%; z-index: -1">
+      <a href="http://www.sweethome3d.com">Sweet Home 3D</a> HTML5 Viewer / Version 1.7 - Distributed under GNU General Public License
+    </div>
+
+    <!-- Copy the following script to view your home in the previous canvas -->
+    <script type="text/javascript">
+
+      var onerror = function(err) {
+        if (err == "No WebGL") {
+          alert("Sorry, your browser doesn't support WebGL.");
+        } else {
+          console.log(err.stack);
+          alert("Error: " + (err.message  ? err.constructor.name + " " +  err.message  : err)
+            + (window.location.href.indexOf("file://") === 0 ? "\nCheck your browser is allowed to access local files." : ""));
+        }
+      };
+      var onprogression = function(part, info, percentage) {
+        var progress = document.getElementById("viewerProgress"); 
+        if (part === HomeRecorder.READING_HOME) {
+          // Home loading is finished 
+          progress.value = percentage * 100;
+          info = info.substring(info.lastIndexOf('/') + 1);
+        } else if (part === Node3D.READING_MODEL) {
+          // Models loading is finished 
+          progress.value = 100 + percentage * 100;
+          if (percentage === 1) {
+            document.getElementById("viewerProgressDiv").style.visibility = "hidden";
+          }
+        }
+        
+        document.getElementById("viewerProgressLabel").innerHTML = 
+        (percentage ? Math.floor(percentage * 100) + "% " : "") + part + " " + info;
+      };
+      
+
+  // Fonction pour récupérer les paramètres d'URL et mettre à jour les valeurs des variables
+  function updateVariablesFromURL() {
+      // Récupérer les paramètres d'URL
+      const params = new URLSearchParams(window.location.search);
+      
+      // Extraire les valeurs des paramètres et les mettre à jour
+      const homeUrl = params.get('homeUrl');
+      const getLevel = params.get('getLevel');
+      const getSelectableLevels = JSON.parse(params.get('getSelectableLevels'));
+
+    // Display home in canvas 3D
+    // Mouse and keyboard navigation explained at 
+    // http://sweethome3d.cvs.sf.net/viewvc/sweethome3d/SweetHome3D/src/com/eteks/sweethome3d/viewcontroller/resources/help/en/editing3DView.html
+    // You may also switch between aerial view and virtual visit with the space bar
+    // For browser compatibility, see http://caniuse.com/webgl
+    viewHome("viewerCanvas",    // Id of the canvas
+             homeUrl,           // URL or relative URL of the home to display 
+             onerror,           // Callback called in case of error
+             onprogression,     // Callback called while loading 
+            {roundsPerMinute: 5,                    // Rotation speed of the animation launched once home is loaded in rounds per minute, no animation if missing or equal to 0 
+             navigationPanel: "arrows",               // Displayed navigation arrows, "none" or "default" for default one or an HTML string containing elements with data-simulated-key 
+                                                    // attribute set "UP", "DOWN", "LEFT", "RIGHT"... to replace the default navigation panel, "none" if missing 
+             aerialViewButtonId: "aerialView",      // Id of the aerial view radio button, radio buttons hidden if missing  
+             virtualVisitButtonId: "virtualVisit",  // Id of the aerial view radio button, radio buttons hidden if missing  
+             levelsAndCamerasListId: "levelsAndCameras",          // Id of the levels and cameras select component, hidden if missing
+             level: getLevel,                                     // Uncomment to select the displayed level, default level if missing */
+             selectableLevels: getSelectableLevels,        // Uncomment to choose the list of displayed levels, no select component if empty array */
+          /* camera: "Exterior view", */                          // Uncomment to select a camera, default camera if missing */
+          /* selectableCameras: ["Exterior view", "Kitchen"], */  // Uncomment to choose the list of displayed cameras, no camera if missing */
+             activateCameraSwitchKey: true                        // Switch between top view / virtual visit with space bar if not false or missing */
+           });  
+  }
+
+  // Appeler la fonction pour mettre à jour les variables à partir des paramètres d'URL lors du chargement de la page
+  updateVariablesFromURL();
+
+</script>
+
+</body>
+</html>

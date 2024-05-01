@@ -1,0 +1,34 @@
+{
+  "floor1": {
+    "filters": {
+      "nofilter": "datas/svg/floor1.svg",
+      "lights": "datas/svg/floor1_lights.svg",
+      "electricity": "datas/svg/floor1_electricity.svg"
+    },
+    "parameters": {
+      "level3D": "Floor 1"
+    }
+  },
+
+  "floor2": {
+    "filters": {
+      "nofilter": "datas/svg/floor2.svg",
+      "lights": "datas/svg/floor2_lights.svg",
+      "electricity": "datas/svg/floor2_electricity.svg"
+    },
+    "parameters": {
+      "level3D": "Floor 2"
+    }
+    
+  },
+  "floorTest": {
+    "filters": {
+      "nofilter": "datas/svg/floor1.svg",
+      "lights": "datas/svg/floor1_lights.svg",
+      "test": "datas/svg/floor1_electricity.svg"
+    },
+    "parameters": {
+      "level3D": ""
+    }
+  }
+}

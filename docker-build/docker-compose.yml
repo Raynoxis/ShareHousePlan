@@ -3,9 +3,9 @@ services:
     build:
       context: ../
       dockerfile: ./docker-build/Dockerfile
-    container_name: ShareHousePlan
+    container_name: ShareHousePlan-build
     restart: always
     volumes:
-      - ./datas:/app/datas
+      - ../docker/DATAS/datas:/app/datas
     ports:
       - 8080:8080
