@@ -87,6 +87,21 @@ https://sourceforge.net/p/sweethome3d/plug-ins/43/
 ***
  - (OPTIONAL) : Install the Plug-in : '2DSymbols' on SweetHome3D, to have the same symbols as me.
 
+
+  ## 3D visualization
+For the 3D visualization of the house plan, exported from SweetHome3D, I used a fantastic community Plug-in. 
+- A DEMO is available here: https://www.sweethome3d.com/blog/2016/05/05/export_to_html5_plug_in.html
+- The Plug-in is available here under the name : 'ExportToHTML5' : https://www.sweethome3d.com/plugins.jsp
+
+I've included the Plug-in's HTML code and libraries alongside my code, and added a link that allows my code to launch the Plug-in's page by sending it some datas.
+
+**So if you select a level in 2D, and then display 3D, the corresponding floor will be loaded !**
+
+***
+After installing the Plug-in, you can export your 3D plan by selecting **'Tools'** then **'Export to HTML5'**.
+Be sure to name the floors first, as this naming will have to be reported in ```floors.json``` for each level.
+ ![html5](https://github.com/Raynoxis/ShareHousePlan/assets/34026291/2150cc66-efdc-4dbf-828d-bdbc1a20e551)
+
 ***
 
 
@@ -99,12 +114,12 @@ https://sourceforge.net/p/sweethome3d/plug-ins/43/
 In ```/app/datas``` folder, you need to put all the configuration files and the datas.
 | Name | Description|
 | --- | --- |
-| ```svg``` | (NEEDED) This is the folder to put all ```.svg``` files for all your floors and filters + ```floors.json``` |
-| ```points``` | (NEEDED) This is the folder to put all files needed for all yours points (jpg, webp, png, pdf, etc..) + ```points.json``` |
-| ```3D``` | (OPTIONAL) This is the folder to put the ```.zip``` file of your exported 3D plan from HTML5 Plugin of SweetHome3D. Unzip the first exported ```.zip``` file from SH3D in a directory then put here the ```.zip``` from the directory |
-| svg/```floors.json``` | (NEEDED) This file allows you to create the floors and their associated filters. Floors and Filters are associated to specific ```.svg``` file. It also associates 2D level names with level names in SweetHome3D (for 3D display) |
-| points/```points.json``` | (NEEDED) This file allows you to create points at specific coordinates on the plan. Each point is associated with a floor, and opens the viewing of a file (*text, pdf, img*) when clicked. |
-| ```config.json```` | (NEEDED) This file allows to configurate all options of 2D plan (Size, center, etc). It also permits to locate the ```.zip``` file for 3D. |
+| **svg** | (NEEDED) This is the folder to put all ```.svg``` files for all your floors and filters + ```floors.json``` |
+| **points** | (NEEDED) This is the folder to put all files needed for all yours points (jpg, webp, png, pdf, etc..) + ```points.json``` |
+| **3D** | (OPTIONAL) This is the folder to put the ```.zip``` file of your exported 3D plan from HTML5 Plugin of SweetHome3D. Unzip the first exported ```.zip``` file from SH3D in a directory then put here the ```.zip``` from the directory |
+| **svg/**```floors.json``` | (NEEDED) This file allows you to create the floors and their associated filters. Floors and Filters are associated to specific ```.svg``` file. It also associates 2D level names with level names in SweetHome3D (for 3D display) |
+| **points/**```points.json``` | (NEEDED) This file allows you to create points at specific coordinates on the plan. Each point is associated with a floor, and opens the viewing of a file (*text, pdf, img*) when clicked. |
+| ```config.json``` | (NEEDED) This file allows to configurate all options of 2D plan (Size, center, etc). It also permits to locate the ```.zip``` file for 3D. |
 
 ##### Example : In ```/app/datas/```
 ![datasExample](https://github.com/Raynoxis/ShareHousePlan/assets/34026291/6342d581-07e1-4204-be04-b516af2bb3cf)
