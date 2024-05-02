@@ -77,9 +77,9 @@ services:
 https://sourceforge.net/p/sweethome3d/plug-ins/43/
 ***
 - First you haves to create some classic floor on SweetHome3D (Floor1, Floor2, etc..) and design your house floor by floor. (You can add a scan of your scaled plan in the background.)
-
+<p align="center">
 <img src="https://github.com/Raynoxis/ShareHousePlan/assets/34026291/fde5825c-d90f-4d07-a172-6b2e6067bd20" width="500">
-
+</p>
 *You have to put a square of walls around your plan, same on each floor. This is the size of mine. The ```.svg``` file depends on these walls.
   ***
 - After, for all your filters, you have to create somes "Floor of same Elevation" depending Floor1, and depending Floor2 (It was at this stage that I cut all the plan's measurements and pasted them into a dedicated 'Legend' level.).
