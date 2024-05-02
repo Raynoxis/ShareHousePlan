@@ -26,7 +26,7 @@ which helps you draw the plan of your house, arrange furniture on it and visit t
 <img src="https://www.gstatic.com/youtube/img/branding/youtubelogo/svg/youtubelogo.svg" width="150">
 
 I'll show you how it works soon on my Youtube channel : https://www.youtube.com/@Raynoxis (*French*)
-- Creation in SweetHome3D (with ```.svg``` export)
+- Creation in SweetHome3D (with ```.svg``` export and 3D HTML5 export)
 - The configuration of the application.
 
 **[Subscribe](https://www.youtube.com/@Raynoxis)** if you want to help me ! Bye ;)
