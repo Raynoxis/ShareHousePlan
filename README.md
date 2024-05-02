@@ -1,7 +1,12 @@
 # ShareHousePlan
-**Share the plans of your house** under construction with **everyone** involved in the **construction process**, as well as with your family and friends. 
+**Share the plans of your house** under construction with **everyone** involved in the **construction process**, as well as with your family and friends.
 This application allows you to display an **interactive map** of the various construction **floors**, with **filters** and **points of interest**. These display **text, images and PDFs** at specific points on the floor plan and **you can customize everything** to suit your needs. 
 I've also added support for a 3D viewer (SweetHome3D compatible only), so you can see a live 3D plan of your property and even visit it.
+<p align="center">
+<img src="https://github.com/Raynoxis/ShareHousePlan/assets/34026291/1eebeeea-ff37-4648-9072-bd87251e2951" width="600">
+</p>
+
+***
 
 ShareHousePlan's interface works equally well on cell phones and PCs, and can be installed locally (PWA) to operate without the Internet.
 ![pwaInstallExample](https://github.com/Raynoxis/ShareHousePlan/assets/34026291/6224d215-b97b-476b-80db-810bc5d025d2)
@@ -29,10 +34,13 @@ I'll show you how it works soon on my Youtube channel : https://www.youtube.com/
 ***
 
 
-## Demo PC
-[demoPc.webm](https://github.com/Raynoxis/ShareHousePlan/assets/34026291/a60e24d3-3a94-40ad-9c98-d11a470a8788)
+## Demo PC 2D
+[Test1_VP8.webm](https://github.com/Raynoxis/ShareHousePlan/assets/34026291/63a940b5-6cbf-4497-88eb-6319f4fd8a69)
 
-## Demo Mobile (PWA)
+## Demo PC 3D
+[Test2_VP8.webm](https://github.com/Raynoxis/ShareHousePlan/assets/34026291/c7526d9a-6c32-479b-af26-66466d91a86e)
+
+## Demo Mobile 2D (PWA)
 [demoMobile.webm](https://github.com/Raynoxis/ShareHousePlan/assets/34026291/fb1d1eff-23c5-43ea-86f0-faffa37bcb4b)
 
 *If you have more than two floors on your plans, don't worry, the buttons will become a drop-down list on mobile.*
