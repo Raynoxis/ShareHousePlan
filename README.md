@@ -3,7 +3,7 @@
 This application allows you to display an **interactive map** of the various construction **floors**, with **filters** and **points of interest**. These display **text, images and PDFs** at specific points on the floor plan and **you can customize everything** to suit your needs. 
 I've also added support for a 3D viewer (SweetHome3D compatible only), so you can see a live 3D plan of your property and even visit it.
 <p align="center">
-<img src="https://github.com/Raynoxis/ShareHousePlan/assets/34026291/1eebeeea-ff37-4648-9072-bd87251e2951" width="600">
+<img src="https://github.com/Raynoxis/ShareHousePlan/assets/34026291/a37da713-5395-461a-aa70-d70543cdcc44" width="600">
 </p>
 
 ***
